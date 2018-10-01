@@ -95,3 +95,10 @@ ENV/
 .DS_Store
 
 samples/outreach/blogs/segmentation_blogpost/carvana-image-masking-challenge/
+
+# Compiled protobuf
+research/object_detection/protos/*pb2.py
+ # Pycocotools
+research/pycocotools*
+ # Downloaded models
+research/object_detection/zoo*
