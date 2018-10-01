@@ -43,6 +43,7 @@ from object_detection.models.embedded_ssd_mobilenet_v1_feature_extractor import 
 from object_detection.models.ssd_inception_v2_feature_extractor import SSDInceptionV2FeatureExtractor
 from object_detection.models.ssd_inception_v3_feature_extractor import SSDInceptionV3FeatureExtractor
 from object_detection.models.ssd_mobilenet_v1_feature_extractor import SSDMobileNetV1FeatureExtractor
+from object_detection.models.ssd_mobilenet_v1_small_feature_extractor import SSDMobileNetV1SmallFeatureExtractor
 from object_detection.models.ssd_mobilenet_v1_fpn_feature_extractor import SSDMobileNetV1FpnFeatureExtractor
 from object_detection.models.ssd_mobilenet_v1_ppn_feature_extractor import SSDMobileNetV1PpnFeatureExtractor
 from object_detection.models.ssd_mobilenet_v2_feature_extractor import SSDMobileNetV2FeatureExtractor
@@ -58,6 +59,7 @@ SSD_FEATURE_EXTRACTOR_CLASS_MAP = {
     'ssd_inception_v2': SSDInceptionV2FeatureExtractor,
     'ssd_inception_v3': SSDInceptionV3FeatureExtractor,
     'ssd_mobilenet_v1': SSDMobileNetV1FeatureExtractor,
+    'ssd_mobilenet_v1_small': SSDMobileNetV1SmallFeatureExtractor,
     'ssd_mobilenet_v1_fpn': SSDMobileNetV1FpnFeatureExtractor,
     'ssd_mobilenet_v1_ppn': SSDMobileNetV1PpnFeatureExtractor,
     'ssd_mobilenet_v2': SSDMobileNetV2FeatureExtractor,
