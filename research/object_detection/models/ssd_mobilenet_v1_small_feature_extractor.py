@@ -12,18 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
- """SSDFeatureExtractor for MobilenetV1 features."""
- import tensorflow as tf
- from object_detection.meta_architectures import ssd_meta_arch
+
+"""SSDFeatureExtractor for MobilenetV1 features."""
+
+import tensorflow as tf
+
+from object_detection.meta_architectures import ssd_meta_arch
 from object_detection.models import feature_map_generators
 from object_detection.utils import context_manager
 from object_detection.utils import ops
 from object_detection.utils import shape_utils
 from nets import mobilenet_v1
- slim = tf.contrib.slim
- class SSDMobileNetV1SmallFeatureExtractor(ssd_meta_arch.SSDFeatureExtractor):
+
+slim = tf.contrib.slim
+
+
+class SSDMobileNetV1SmallFeatureExtractor(ssd_meta_arch.SSDFeatureExtractor):
   """SSD Feature Extractor using MobilenetV1 features."""
-   def __init__(self,
+
+  def __init__(self,
                is_training,
                depth_multiplier,
                min_depth,
@@ -34,7 +41,8 @@ from nets import mobilenet_v1
                use_depthwise=False,
                override_base_feature_extractor_hyperparams=False):
     """MobileNetV1 Feature Extractor for SSD Models.
-     Args:
+
+    Args:
       is_training: whether the network is in training mode.
       depth_multiplier: float depth multiplier for feature extractor.
       min_depth: minimum feature extractor depth.
@@ -63,35 +71,44 @@ from nets import mobilenet_v1
         use_depthwise=use_depthwise,
         override_base_feature_extractor_hyperparams=
         override_base_feature_extractor_hyperparams)
-   def preprocess(self, resized_inputs):
+
+  def preprocess(self, resized_inputs):
     """SSD preprocessing.
-     Maps pixel values to the range [-1, 1].
-     Args:
+
+    Maps pixel values to the range [-1, 1].
+
+    Args:
       resized_inputs: a [batch, height, width, channels] float tensor
         representing a batch of images.
-     Returns:
+
+    Returns:
       preprocessed_inputs: a [batch, height, width, channels] float tensor
         representing a batch of images.
     """
     return (2.0 / 255.0) * resized_inputs - 1.0
-   def extract_features(self, preprocessed_inputs):
+
+  def extract_features(self, preprocessed_inputs):
     """Extract features from preprocessed inputs.
-     Args:
+
+    Args:
       preprocessed_inputs: a [batch, height, width, channels] float tensor
         representing a batch of images.
-     Returns:
+
+    Returns:
       feature_maps: a list of tensors where the ith tensor has shape
         [batch, height_i, width_i, depth_i]
     """
     preprocessed_inputs = shape_utils.check_min_image_dim(
         33, preprocessed_inputs)
-     feature_map_layout = {
+
+    feature_map_layout = {
         'from_layer': ['Conv2d_11_pointwise'],
         'layer_depth': [-1],
         'use_explicit_padding': self._use_explicit_padding,
         'use_depthwise': self._use_depthwise,
     }
-     with tf.variable_scope('MobilenetV1',
+
+    with tf.variable_scope('MobilenetV1',
                            reuse=self._reuse_weights) as scope:
       with slim.arg_scope(
           mobilenet_v1.mobilenet_v1_arg_scope(
@@ -113,4 +130,5 @@ from nets import mobilenet_v1
             min_depth=self._min_depth,
             insert_1x1_conv=True,
             image_features=image_features)
-     return feature_maps.values()
+
+    return feature_maps.values()
